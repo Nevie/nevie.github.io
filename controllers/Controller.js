@@ -35,7 +35,7 @@ class Controller {
                 data.push(new News(item.author, item.description, item.publishedAt, item.title, item.url, item.urlToImage));
             })
         }
-        debugger
+    
         this.newsList = data;
         let channels = data.slice(0, numberOfNews);
         NewsChannelView.drawNewsList(channels);
