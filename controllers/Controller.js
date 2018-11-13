@@ -11,6 +11,7 @@ class Controller {
     constructor() {
         this.newsService = new NewsService();
         this.avalibleChanels = [];
+        this.newsList = [];
     }
 
     receiveChannels(channels) {
@@ -34,9 +35,10 @@ class Controller {
                 data.push(new News(item.author, item.description, item.publishedAt, item.title, item.url, item.urlToImage));
             })
         }
-
-        let randomChannels = data.slice(0, numberOfNews);
-        NewsChannelView.drawNewsList(randomChannels);
+        debugger
+        this.newsList = data;
+        let channels = data.slice(0, numberOfNews);
+        NewsChannelView.drawNewsList(channels);
     }
 
     getNewsChannels() {
@@ -48,8 +50,11 @@ class Controller {
         });
     }
 
-    getNewsByChanel(chanel) {
+    getNewsByChanel(chanel = "mashable") {
         let that = this;
+        let chn = document.getElementById("currentChanel");
+        chn.innerText= chanel;
+
         this.newsService.getData('https://newsapi.org/v1/articles?source=' + chanel + '&').then((result) => {
             that.receiveNews(result);
         }).catch(function (error) {
