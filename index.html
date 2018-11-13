@@ -1,1 +1,43 @@
-"Hello World" 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>News</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script type="module" src="controllers/Controller.js"></script>
+    <script type="module" src="services/NewsService.js"></script>
+    <script type="module" src="view/NewsChannelView.js"></script>
+    <script type="module" src="view/Error.js"></script>
+    <script type="module" src="models/Channel.js"></script>
+    <script type="module" src="models/News.js"></script>
+    <script type="module" src="app.js"></script>
+</head>
+
+<body>
+
+<header>
+    <h1>News</h1>
+</header>
+
+<section>
+    <div class="column left">
+        <h2>Channels</h2>
+        <div id="channelsBlock"></div>
+        <input id="nextChannels" type="button" class="btn btn-info btn-lg" value="Get other channels">
+    </div>
+
+    <div class="column right">
+        <h2 id="newsBlockHeader">News list</h2>
+        <div id="newsBlock"></div>
+    </div>
+
+</section>
+
+<footer>
+    <p>Data provided by
+        <a href="https://newsapi.org/" target="_blank">newsapi.org</a>
+    </p>
+</footer>
+</body>
+</html>
