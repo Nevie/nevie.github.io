@@ -1,21 +1,23 @@
-//const apiKey="6a047c3c1bc14dae8aa1f9cb4c3ade31";
 import {Error} from "../view/Error.js";
-
-const apiKey = "efb168365ee44a1dae2892cab1746f77";
+import config from "../config.js";
 
 export class NewsService {
-    getData(url) {
-        const path = url + 'apiKey=' + apiKey;
+
+    static getChannels() {
+        const path = `${config.apiUrl}/sources?apiKey=${config.apiKey}`;
         return fetch(path)
             .then(function (response) {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    Error.drawDataError();
-                }
+                return response.ok ? response.json() : Promise.reject(response);
             })
-            .catch(function (error) {
-                Error.drawDataError();
-            });
+            .catch(Error.drawDataError());
+    }
+
+    static getNews(chanel) {
+        const path = `${config.apiUrl}/top-headlines?sources=${chanel}&apiKey=${config.apiKey}`;
+        return fetch(path)
+            .then(function (response) {
+                return response.ok ? response.json() : Promise.reject(response);
+            })
+            .catch(Error.drawDataError());
     }
 }

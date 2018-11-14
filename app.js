@@ -1,5 +1,4 @@
-import NewsController from "./controllers/Controller.js";
+import {Controller} from "./controllers/Controller.js";
 
-let newsController = new NewsController();
+let newsController = new Controller();
 newsController.getNewsChannels();
-newsController.getNewsByChanel();
