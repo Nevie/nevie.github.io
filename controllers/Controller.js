@@ -31,13 +31,7 @@ export class Controller {
                 data.push(new News(item.author, item.description, item.publishedAt, item.title, item.url, item.urlToImage));
             })
         }
-<<<<<<< HEAD
         let channels = data.slice(0, config.numberOfNews);
-=======
-    
-        this.newsList = data;
-        let channels = data.slice(0, numberOfNews);
->>>>>>> 12363fbc1091add8d99950777dd7149118c01a3e
         NewsChannelView.drawNewsList(channels);
     }
 
