@@ -7,7 +7,7 @@ import config from "../config.js";
 
 export class Controller {
     constructor(element) {
-        this.page=element;
+        this.page = element;
         this.avalibleChanels = [];
     }
 
@@ -21,7 +21,7 @@ export class Controller {
         this.avalibleChanels = data;
         let randomChannels = [] = data.sort(() => .5 - Math.random()).slice(0, config.numberOfChannels);
         this.getNewsByChanel(randomChannels[0].id);
-        NewsChannelView.drawChannelList(randomChannels);
+        this.page.querySelector("#channelsBlock ul").insertAdjacentHTML('beforeend', NewsChannelView.drawChannelList(randomChannels));
         this.attachChanelEvents();
     }
 
@@ -33,7 +33,7 @@ export class Controller {
             });
         }
         let channels = data.slice(0, config.numberOfNews);
-        NewsChannelView.drawNewsList(channels);
+        this.page.querySelector("#newsBlock ul").insertAdjacentHTML('beforeend', NewsChannelView.drawNewsList(channels));
     }
 
     getNewsChannels() {

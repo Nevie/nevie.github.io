@@ -13,7 +13,7 @@ export class NewsChannelView {
 
 
         });
-        document.querySelector("#channelsBlock ul").insertAdjacentHTML('beforeend', html);
+        return html;
     }
 
     static drawNewsList(data) {
@@ -33,6 +33,6 @@ export class NewsChannelView {
                    </div>
              </li>`;
         });
-        document.querySelector("#newsBlock ul").insertAdjacentHTML('beforeend', html);;
+        return html;
     }
 }
