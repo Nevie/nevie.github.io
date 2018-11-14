@@ -13,9 +13,9 @@ export class Controller {
     receiveChannels(channels) {
         let data = [];
         if (channels["sources"]) {
-            channels["sources"].map(item => {
-                data.push(new Channel(item.id, item.name, item.description))
-            })
+            data = channels["sources"].map(item => {
+                return new Channel(item.id, item.name, item.description);
+            });
         }
         this.avalibleChanels = data;
         let randomChannels = [] = data.sort(() => .5 - Math.random()).slice(0, config.numberOfChannels);
@@ -27,9 +27,9 @@ export class Controller {
     receiveNews(posts) {
         let data = [];
         if (posts["articles"]) {
-            posts["articles"].map(item => {
-                data.push(new News(item.author, item.description, item.publishedAt, item.title, item.url, item.urlToImage));
-            })
+            data = posts["articles"].map(item => {
+               return new News(item.author, item.description, item.publishedAt, item.title, item.url, item.urlToImage);
+            });
         }
         let channels = data.slice(0, config.numberOfNews);
         NewsChannelView.drawNewsList(channels);
