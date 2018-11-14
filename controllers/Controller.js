@@ -6,7 +6,8 @@ import {News} from "../models/News.js";
 import config from "../config.js";
 
 export class Controller {
-    constructor() {
+    constructor(element) {
+        this.page=element;
         this.avalibleChanels = [];
     }
 
@@ -44,7 +45,7 @@ export class Controller {
     getNewsByChanel(chanel) {
         if(!chanel) return;
 
-        let chn = document.getElementById("currentChanel");
+        let chn = this.page.querySelector("#currentChanel");
         chn.innerText = chanel;
         NewsService.getNews(chanel)
             .then(this.receiveNews.bind(this))
@@ -52,13 +53,13 @@ export class Controller {
     }
 
     attachChanelEvents() {
-        document.querySelector("div#channelsBlock").addEventListener('click', this.onChanelSelect.bind(this));
-        let btn = document.getElementById("nextChannels");
+        this.page.querySelector("div#channelsBlock").addEventListener('click', this.onChanelSelect.bind(this));
+        let btn = this.page.querySelector("#nextChannels");
         btn.addEventListener('click', this.onNextClick.bind(this));
     }
 
     onNextClick() {
-        let el = document.querySelector("#channelsBlock ul");
+        let el = this.page.querySelector("#channelsBlock ul");
         el.innerText = "";
         let randomChannels = this.avalibleChanels.sort(() => .5 - Math.random()).slice(0, config.numberOfChannels);
         NewsChannelView.drawChannelList(randomChannels);
@@ -67,7 +68,7 @@ export class Controller {
 
     onChanelSelect(event) {
         event.stopPropagation();
-        document.querySelector("#newsBlock ul").innerHTML = '';
+        this.page.querySelector("#newsBlock ul").innerHTML = '';
         this.getNewsByChanel(event.target.id);
     }
 }
