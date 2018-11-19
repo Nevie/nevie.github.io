@@ -3,7 +3,7 @@ import {NewsService} from "../services/NewsService.js";
 import {NewsChannelView} from "../view/NewsChannelView.js";
 import {Error} from "../view/Error.js";
 import {News} from "../models/News.js";
-import config from "../../config.js";
+import {appConfig} from "../../config.js";
 
 export class Controller {
     constructor(element) {
@@ -19,8 +19,10 @@ export class Controller {
             });
         }
         this.avalibleChanels = data;
-        let randomChannels = [] = data.sort(() => .5 - Math.random()).slice(0, config.numberOfChannels);
+        let randomChannels = [] = data.sort(() => .5 - Math.random()).slice(0, appConfig.numberOfChannels);
         this.getNewsByChanel(randomChannels[0].id);
+        let chn = this.page.querySelector("#currentChanel");
+        chn.innerText = randomChannels[0].name;
         this.page.querySelector("#channelsBlock ul").insertAdjacentHTML('beforeend', NewsChannelView.drawChannelList(randomChannels));
         this.attachChanelEvents();
     }
@@ -28,28 +30,28 @@ export class Controller {
     receiveNews(posts) {
         let data = [];
         if (posts["articles"]) {
+            let chn = this.page.querySelector("#currentChanel");
+            chn.innerText = posts["articles"][0].author;
+
             data = posts["articles"].map(item => {
-               return new News(item.author, item.description, item.publishedAt, item.title, item.url, item.urlToImage);
+                return new News(item.author, item.description, item.publishedAt, item.title, item.url, item.urlToImage);
             });
         }
-        let channels = data.slice(0, config.numberOfNews);
+        let channels = data.slice(0, appConfig.numberOfNews);
         this.page.querySelector("#newsBlock ul").insertAdjacentHTML('beforeend', NewsChannelView.drawNewsList(channels));
     }
 
     getNewsChannels() {
         NewsService.getChannels()
             .then(this.receiveChannels.bind(this))
-            .catch(Error.drawDataError());
+            .catch(Error.drawDataError.bind(this, this.page));
     }
 
     getNewsByChanel(chanel) {
         if(!chanel) return;
-
-        let chn = this.page.querySelector("#currentChanel");
-        chn.innerText = chanel;
         NewsService.getNews(chanel)
             .then(this.receiveNews.bind(this))
-            .catch(Error.drawDataError());
+            .catch(Error.drawDataError.bind(this, this.page));
     }
 
     attachChanelEvents() {
@@ -60,9 +62,8 @@ export class Controller {
 
     onNextClick() {
         let el = this.page.querySelector("#channelsBlock ul");
-        el.innerText = "";
-        let randomChannels = this.avalibleChanels.sort(() => .5 - Math.random()).slice(0, config.numberOfChannels);
-        NewsChannelView.drawChannelList(randomChannels);
+        let randomChannels = this.avalibleChanels.sort(() => .5 - Math.random()).slice(0, appConfig.numberOfChannels);
+        el.innerText = NewsChannelView.drawChannelList(randomChannels);
         window.scrollTo(0, 0);
     }
 
