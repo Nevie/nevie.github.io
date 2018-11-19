@@ -24,6 +24,7 @@ export class NewsChannelView {
         let html = ``;
         data.forEach(item => {
             let dataPublish = new Date(item.publishedAt);
+            let forView=dataPublish.toLocaleDateString()
 
             html += `<li class="list-group-item">
                    <a href="${item.url}" target="_blank">${item.title}</a>

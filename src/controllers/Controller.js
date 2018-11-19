@@ -3,7 +3,7 @@ import {NewsService} from "../services/NewsService.js";
 import {NewsChannelView} from "../view/NewsChannelView.js";
 import {Error} from "../view/Error.js";
 import {News} from "../models/News.js";
-import config from "../config.js";
+import config from "../../config.js";
 
 export class Controller {
     constructor(element) {
@@ -54,7 +54,7 @@ export class Controller {
 
     attachChanelEvents() {
         this.page.querySelector("div#channelsBlock").addEventListener('click', this.onChanelSelect.bind(this));
-        let btn = this.page.querySelector("#nextChannels");
+        let btn = document.querySelector("#nextChannels");
         btn.addEventListener('click', this.onNextClick.bind(this));
     }
 

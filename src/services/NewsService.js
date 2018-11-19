@@ -1,5 +1,5 @@
 import {Error} from "../view/Error.js";
-import config from "../config.js";
+import config from "../../config.js";
 
 export class NewsService {
 

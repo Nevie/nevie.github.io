@@ -1,0 +1,36 @@
+{
+  "name": "fcmp2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/app.js",
+  "scripts": {
+    "run": "webpack --mode production",
+    "dev": "webpack-dev-server --content-base dist --hot --mode development"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.0.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-runtime": "^6.26.0",
+    "exports-loader": "^0.7.0",
+    "imports-loader": "^0.8.0",
+    "promise-polyfill": "8.1.0",
+    "whatwg-fetch": "^3.0.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.1.5",
+    "@babel/core": "^7.1.6",
+    "@babel/node": "^7.0.0",
+    "@babel/plugin-syntax-dynamic-import": "^7.0.0",
+    "@babel/preset-env": "^7.1.6",
+    "@babel/register": "^7.0.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "webpack": "^4.25.1",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.10"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nevie/nevie.github.io.git"
+  },
+  "author": "Yuliya"
+}
