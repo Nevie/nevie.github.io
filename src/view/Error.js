@@ -4,6 +4,6 @@ export class Error{
                 <strong>Fail.</strong>
                 Sorry, no news available from this channel. Please, try to choose another channel
             </div>`;
-        element.querySelector("#newsBlock").insertAdjacentHTML('beforeend', html);
+        document.querySelector("#newsBlock").insertAdjacentHTML('beforeend', html);
     }
 }
