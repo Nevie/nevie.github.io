@@ -8,10 +8,10 @@ const config = {
     output: {
         chunkFilename: '[name].bundle.js',
         filename: '[name].bundle.js',
-        path: path.resolve(__dirname, './dist')
+        path: path.resolve(__dirname, './')
     },
     devServer: {
-        contentBase: path.join(__dirname, './dist/'),
+        contentBase: path.join(__dirname, './'),
         compress: true,
         open: true,
         port: 9000
@@ -35,7 +35,7 @@ const config = {
                         {
                             loader: 'css-loader'
                         }],
-                    publicPath:'/dist'
+                    publicPath:'./'
                 }),
             }
         ]
