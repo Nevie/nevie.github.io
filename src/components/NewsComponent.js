@@ -10,18 +10,16 @@ export class NewsComponent {
 
     init() {
         this.page.insertAdjacentHTML('beforeend', MainTemplateView.getTemplate());
-        this.getNewsChannels().then(() => {
-            console.log("Success")
-        });
+        this.drawNewsChannels();
     }
 
-    async getNewsChannels() {
+    async drawNewsChannels() {
         let channels = await Service.getChannels();
         this.attachEventsToChannels(channels);
-        await this.getNewsByChanel(channels[0].id);
+        await this.drawNewsByChanel(channels[0].id);
     }
 
-    async getNewsByChanel(chanel) {
+    async drawNewsByChanel(chanel) {
         if(!chanel) return;
         let articles = await Service.getNews(chanel);
         this.attachEventsToNews(articles)
@@ -55,6 +53,6 @@ export class NewsComponent {
     onChanelSelect(event) {
         event.stopPropagation();
         this.page.querySelector("#newsBlock ul").innerHTML = '';
-        this.getNewsByChanel(event.target.id).then(()=>{});
+        this.drawNewsByChanel(event.target.id).then(()=>{});
     }
 }
