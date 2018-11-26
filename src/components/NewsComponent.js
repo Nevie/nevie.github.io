@@ -15,19 +15,6 @@ export class NewsComponent {
         });
     }
 
-    attachEventsToChannels(channels) {
-        let chn = this.page.querySelector("#currentChanel");
-        chn.innerText = channels[0].name;
-        this.page.querySelector("#channelsBlock ul").insertAdjacentHTML('beforeend', NewsChannelView.drawChannelList(channels));
-        this.attachChanelEvents();
-    }
-
-    attachEventsToNews(articles) {
-        let chn = this.page.querySelector("#currentChanel");
-        chn.innerText = articles[0].author;
-        this.page.querySelector("#newsBlock ul").insertAdjacentHTML('beforeend', NewsChannelView.drawNewsList(articles));
-    }
-
     async getNewsChannels() {
         let channels = await Service.getChannels();
         this.attachEventsToChannels(channels);
@@ -40,7 +27,20 @@ export class NewsComponent {
         this.attachEventsToNews(articles)
     }
 
-    attachChanelEvents() {
+    attachEventsToChannels(channels) {
+        let chn = this.page.querySelector("#currentChanel");
+        chn.innerText = channels[0].name;
+        this.page.querySelector("#channelsBlock ul").insertAdjacentHTML('beforeend', NewsChannelView.drawChannelList(channels));
+        this.attachEventsToChanel();
+    }
+
+    attachEventsToNews(articles) {
+        let chn = this.page.querySelector("#currentChanel");
+        chn.innerText = articles[0].author;
+        this.page.querySelector("#newsBlock ul").insertAdjacentHTML('beforeend', NewsChannelView.drawNewsList(articles));
+    }
+
+    attachEventsToChanel() {
         this.page.querySelector("div#channelsBlock").addEventListener('click',() => this.onChanelSelect());
         let btn = document.querySelector("#nextChannels");
         btn.addEventListener('click',() => this.onNextClick());

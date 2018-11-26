@@ -8,13 +8,14 @@ class MainComponent extends HTMLElement {
 
     connectedCallback() {
         this.innerHTML = `
-        <div>
+        <div class="btn btn-primary">
            Click me
         </div>
         `
     }
 
     async loadApp() {
+        this.style.display = 'none';
         const {NewsComponent: NewsComponent} = await import(/* webpackChunkName: "NewsComponent" */ './components/NewsComponent.js');
         const {default: css} = await import(/* webpackChunkName: "css" */ './styles/style.css');
 

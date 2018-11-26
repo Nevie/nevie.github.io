@@ -4,14 +4,11 @@ import {Error} from "../view/Error";
 import {News} from "../models/News";
 
 export class Service {
-    static availableChannels=[];
-    static async executeQuery(query){
-        try {
-            let response = await fetch(query);
-            return response.ok ? response.json() : Promise.reject("");
-        } catch (e) {
-            return Promise.reject(e);
-        }
+    static availableChannels = [];
+
+    static async executeQuery(query) {
+        let response = await fetch(query);
+        return response.ok ? response.json() : Promise.reject("");
     }
 
     static async getChannels() {
@@ -24,17 +21,7 @@ export class Service {
                 Error.drawDataError("")
             });
 
-        console.log(result)
         return result;
-    }
-
-    static createChannelsModel({sources}) {
-        let data;
-        data = sources.map(item => {
-            return new Channel(item.id, item.name, item.description);
-        });
-        Service.availableChannels = data;
-        return data.sort(() => .5 - Math.random()).slice(0, appConfig.numberOfChannels);
     }
 
     static async getNews(chanel) {
@@ -47,8 +34,16 @@ export class Service {
                 Error.drawDataError("")
             });
 
-        console.log(result);
         return result;
+    }
+
+    static createChannelsModel({sources}) {
+        let data;
+        data = sources.map(item => {
+            return new Channel(item.id, item.name, item.description);
+        });
+        Service.availableChannels = data;
+        return data.sort(() => .5 - Math.random()).slice(0, appConfig.numberOfChannels);
     }
 
     static createNewsModel({articles}) {
