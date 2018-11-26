@@ -1,10 +1,18 @@
 import {Service} from "../services/Service.js";
 import {NewsChannelView} from "../view/NewsChannelView.js";
 import {appConfig} from "../../config.js";
+import {MainTemplateView} from "../view/MainTemplateView";
 
-export class Controller {
+export class NewsComponent {
     constructor(element) {
         this.page = element;
+    }
+
+    init() {
+        this.page.insertAdjacentHTML('beforeend', MainTemplateView.getTemplate());
+        this.getNewsChannels().then(() => {
+            console.log("Success")
+        });
     }
 
     attachEventsToChannels(channels) {

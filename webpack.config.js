@@ -6,8 +6,15 @@ const ExtractTextWebpackPlugin = require("extract-text-webpack-plugin");
 const config = {
     entry: ['babel-polyfill', 'whatwg-fetch', "./src/app.js"],
     output: {
-        path: path.resolve(__dirname, './dist'),
-        filename: 'bundle.js',
+        chunkFilename: '[name].bundle.js',
+        filename: '[name].bundle.js',
+        path: path.resolve(__dirname, './dist')
+    },
+    devServer: {
+        contentBase: path.join(__dirname, './dist/'),
+        compress: true,
+        open: true,
+        port: 9000
     },
     devtool: 'eval-source-map',
     module: {
