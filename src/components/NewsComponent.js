@@ -6,23 +6,24 @@ import {MainTemplateView} from "../view/MainTemplateView";
 export class NewsComponent {
     constructor(element) {
         this.page = element;
+        this.service = new Service();
     }
 
     init() {
         this.page.insertAdjacentHTML('beforeend', MainTemplateView.getTemplate());
-        this.drawNewsChannels();
+        this.drawNewsChannels().then();
     }
 
     async drawNewsChannels() {
-        let channels = await Service.getChannels();
+        let channels = await this.service.getChannels();
         this.attachEventsToChannels(channels);
         await this.drawNewsByChanel(channels[0].id);
     }
 
     async drawNewsByChanel(chanel) {
         if(!chanel) return;
-        let articles = await Service.getNews(chanel);
-        this.attachEventsToNews(articles)
+        let articles = await  this.service.getNews(chanel);
+        this.attachEventsToNews(articles);
     }
 
     attachEventsToChannels(channels) {
@@ -39,7 +40,7 @@ export class NewsComponent {
     }
 
     attachEventsToChanel() {
-        this.page.querySelector("div#channelsBlock").addEventListener('click',() => this.onChanelSelect());
+        this.page.querySelector("div#channelsBlock").addEventListener('click',($event) => this.onChanelSelect($event));
         let btn = document.querySelector("#nextChannels");
         btn.addEventListener('click',() => this.onNextClick());
     }
