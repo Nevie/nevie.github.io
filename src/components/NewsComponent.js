@@ -1,59 +1,60 @@
-import {Service} from "../services/Service.js";
-import {NewsChannelView} from "../view/NewsChannelView.js";
+import {GetDataModel} from "../services/GetDataModel.js";
+import {NewsView} from "../view/NewsView.js";
 import {appConfig} from "../../config.js";
-import {MainTemplateView} from "../view/MainTemplateView";
+import {MainTemplate} from "../view/MainTemplate";
+import {Factory} from "../factory/Factory";
+import {RequestsType} from "../models/RequestsTypes";
+import {traceMethodCalls} from "./proxy";
+import {ChannelView} from "../view/ChannelsView";
 
 export class NewsComponent {
+    static instance;
+
     constructor(element) {
+        if(NewsComponent.instance){
+            return NewsComponent.instance;
+        }
+        NewsComponent.instance = this;
+
         this.page = element;
-        this.service = new Service();
+        this.serv = Factory.requestService(RequestsType.GET);
+        this.service = traceMethodCalls(this.serv);
+
+        this.channelView = new ChannelView(this.page);
+        this.newsView = new NewsView(this.page);
+
+        return NewsComponent.instance;
     }
 
     init() {
-        this.page.insertAdjacentHTML('beforeend', MainTemplateView.getTemplate());
-        this.drawNewsChannels().then();
+        MainTemplate.drawTemplate(this.page);
+        this.getChannels().then((channels) => {
+            this.getNewsByChanel(channels[0].id);
+        });
     }
 
-    async drawNewsChannels() {
+    async getChannels() {
         let channels = await this.service.getChannels();
-        this.attachEventsToChannels(channels);
-        await this.drawNewsByChanel(channels[0].id);
+        this.initChannels(channels);
+        return channels;
     }
 
-    async drawNewsByChanel(chanel) {
-        if(!chanel) return;
-        let articles = await  this.service.getNews(chanel);
-        this.attachEventsToNews(articles);
+    async getNewsByChanel(chanel) {
+        let articles = await this.service.getNews(chanel);
+        this.initNews(articles);
     }
 
-    attachEventsToChannels(channels) {
-        let chn = this.page.querySelector("#currentChanel");
-        chn.innerText = channels[0].name;
-        this.page.querySelector("#channelsBlock ul").insertAdjacentHTML('beforeend', NewsChannelView.drawChannelList(channels));
-        this.attachEventsToChanel();
+    initChannels(channels) {
+        this.channelView.drawChannels(channels);
     }
 
-    attachEventsToNews(articles) {
-        let chn = this.page.querySelector("#currentChanel");
-        chn.innerText = articles[0].author;
-        this.page.querySelector("#newsBlock ul").insertAdjacentHTML('beforeend', NewsChannelView.drawNewsList(articles));
-    }
-
-    attachEventsToChanel() {
-        this.page.querySelector("div#channelsBlock").addEventListener('click',($event) => this.onChanelSelect($event));
-        let btn = document.querySelector("#nextChannels");
-        btn.addEventListener('click',() => this.onNextClick());
+    initNews(articles) {
+        this.newsView.drawNews(articles);
     }
 
     onNextClick() {
-        let randomChannels = Service.availableChannels.sort(() => .5 - Math.random()).slice(0, appConfig.numberOfChannels);
-        this.page.querySelector("#channelsBlock ul").innerHTML = NewsChannelView.drawChannelList(randomChannels);
+        let randomChannels = GetDataModel.availableChannels.sort(() => .5 - Math.random()).slice(0, appConfig.numberOfChannels);
+        this.channelView.drawChannels(randomChannels, true);
         window.scrollTo(0, 0);
-    }
-
-    onChanelSelect(event) {
-        event.stopPropagation();
-        this.page.querySelector("#newsBlock ul").innerHTML = '';
-        this.drawNewsByChanel(event.target.id).then(()=>{});
     }
 }

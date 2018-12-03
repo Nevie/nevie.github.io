@@ -1,30 +1,19 @@
-export class NewsChannelView {
-    static drawChannelList(data) {
-        if (!Array.isArray(data)) {
-            return "No data"
-        }
-
-        let html = ``;
-        data.forEach(item => {
-            html += `<li class="list-group-item">
-                    <span>${item.name}</span>
-                    <div id="${item.id}">${item.description}</div>
-                 </li>`;
-
-
-        });
-        return html;
+export class NewsView {
+    constructor(element){
+        this.page = element;
     }
 
-    static drawNewsList(data) {
+    drawNews(data ) {
         if (!Array.isArray(data)) {
             return "No data"
         }
+
+        let chn = this.page.querySelector("#currentChanel");
+        chn.innerText = data[0].source.name;
 
         let html = ``;
         data.forEach(item => {
             let dataPublish = new Date(item.publishedAt);
-            let forView=dataPublish.toLocaleDateString()
 
             html += `<li class="list-group-item">
                    <a href="${item.url}" target="_blank">${item.title}</a>
@@ -34,6 +23,7 @@ export class NewsChannelView {
                    </div>
              </li>`;
         });
-        return html;
+
+        this.page.querySelector("#newsBlock ul").insertAdjacentHTML('beforeend', html);
     }
 }

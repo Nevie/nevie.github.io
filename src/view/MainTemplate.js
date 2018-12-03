@@ -1,6 +1,6 @@
-export class MainTemplateView {
-    static getTemplate() {
-        return `
+export class MainTemplate {
+    static drawTemplate(parentElement) {
+       let html = `
             <section id="newsApplication">
                 <div class="column left">
                      <h2>Channels</h2>
@@ -17,6 +17,8 @@ export class MainTemplateView {
                         <ul class="list-group"></ul>
                     </div>
                 </div>
-            </section>`
+            </section>`;
+
+        parentElement.insertAdjacentHTML('beforeend', html);
     }
 }

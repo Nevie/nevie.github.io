@@ -1,11 +1,13 @@
 export class Error{
+static instance;
+   constructor(){
+       if(Error.instance){
+           return Error.instance;
+       }
+       Error.instance = this;
+       return Error.instance;
+   }
 
-    static getInstance() {
-        if (!Error.instance) {
-            Error.instance = new Error();
-        }
-        return Error.instance;
-    }
     drawDataError(){
         let html=`<div class="alert alert-danger" id="alertDanger">
                 <strong>Fail.</strong>
