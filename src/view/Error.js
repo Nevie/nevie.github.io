@@ -1,18 +1,19 @@
-export class Error{
-static instance;
-   constructor(){
-       if(Error.instance){
-           return Error.instance;
-       }
-       Error.instance = this;
-       return Error.instance;
-   }
+export class Error {
+    static instance;
 
-    drawDataError(){
-        let html=`<div class="alert alert-danger" id="alertDanger">
+    constructor() {
+        if (Error.instance) {
+            return Error.instance;
+        }
+        Error.instance = this;
+        return Error.instance;
+    }
+
+    drawDataError(error) {
+        let html = `<div class="alert alert-danger" id="alertDanger">
                 <strong>Fail.</strong>
-                Sorry, no news available from this channel. Please, try to choose another channel
+                ${error}
             </div>`;
-        document.querySelector("#newsBlock").insertAdjacentHTML('beforeend', html);
+        document.querySelector("#newsBlock ul").innerHTML = html;
     }
 }

@@ -17,9 +17,8 @@ export class NewsComponent {
         NewsComponent.instance = this;
 
         this.page = element;
-        this.serv = Factory.requestService(RequestsType.GET);
-        this.service = traceMethodCalls(this.serv);
-
+        this.service = traceMethodCalls(Factory.requestService(RequestsType.GET));
+        this.mainTemplate = new MainTemplate(this.page);
         this.channelView = new ChannelView(this.page);
         this.newsView = new NewsView(this.page);
 
@@ -27,7 +26,7 @@ export class NewsComponent {
     }
 
     init() {
-        MainTemplate.drawTemplate(this.page);
+        this.mainTemplate.drawTemplate(this.page);
         this.getChannels().then((channels) => {
             this.getNewsByChanel(channels[0].id);
         });
@@ -41,7 +40,9 @@ export class NewsComponent {
 
     async getNewsByChanel(chanel) {
         let articles = await this.service.getNews(chanel);
-        this.initNews(articles);
+        if(articles.length){
+            this.initNews(articles);
+        }
     }
 
     initChannels(channels) {
@@ -55,6 +56,5 @@ export class NewsComponent {
     onNextClick() {
         let randomChannels = GetDataModel.availableChannels.sort(() => .5 - Math.random()).slice(0, appConfig.numberOfChannels);
         this.channelView.drawChannels(randomChannels, true);
-        window.scrollTo(0, 0);
     }
 }

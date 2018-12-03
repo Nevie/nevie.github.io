@@ -6,6 +6,6 @@ export class PutRequest{
             method: RequestsType.POST,
             body: JSON.stringify(opts)
         });
-        return response.ok ? response.json() : Promise.reject("");
+        return response.ok ? response.json() : Promise.reject(response.status);
     }
 }

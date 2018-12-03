@@ -25,6 +25,7 @@ export class ChannelView {
             this.page.querySelector("#channelsBlock ul").insertAdjacentHTML('beforeend', html);
 
         this.attachEventsToChanel();
+        window.scrollTo(0, 0);
     }
 
     attachEventsToChanel() {

@@ -1,11 +1,9 @@
 import {appConfig} from "../../config.js";
 import {Channel} from "../models/Channel";
-import {Error} from "../view/Error";
 import {News} from "../models/News";
 
 export class GetDataModel {
     constructor(requestCallback){
-        this.error = new Error();
         this.requestCallback = requestCallback;
     }
 
@@ -17,8 +15,8 @@ export class GetDataModel {
         await this.requestCallback(path).then(data => {
                 result = this.createChannelsModel(data)
             },
-            () => {
-                this.error.drawDataError()
+            (error) => {
+                this.createError(error);
             });
 
         return result;
@@ -30,11 +28,17 @@ export class GetDataModel {
         await this.requestCallback(path).then(data => {
                 result = this.createNewsModel(data)
             },
-            () => {
-                this.error.drawDataError()
+            error => {
+                this.createError(error);
             });
 
         return result;
+    }
+
+    async createError(error){
+        const {Error: Error} = await import(/* webpackChunkName: "Error" */ '../view/Error.js');
+        this.error = new Error();
+        this.error.drawDataError(error)
     }
 
     createChannelsModel({sources}) {

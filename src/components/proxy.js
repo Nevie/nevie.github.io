@@ -1,12 +1,15 @@
 export function traceMethodCalls(obj) {
-    let handler = {
+    const handler = {
         get(target, propKey, receiver) {
-            const origMethod = target[propKey];
-            return function (...args) {
-                let result = origMethod.apply(this, args);
-                console.log(propKey + JSON.stringify(args));
-                return result;
-            };
+            const targetValue = Reflect.get(target, propKey, receiver);
+            if (typeof targetValue === 'function') {
+                return function (...args) {
+                    console.log('CALL', propKey, args);
+                    return targetValue.apply(this, args);
+                }
+            } else {
+                return targetValue;
+            }
         }
     };
     return new Proxy(obj, handler);

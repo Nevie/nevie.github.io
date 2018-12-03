@@ -4,10 +4,6 @@ export class NewsView {
     }
 
     drawNews(data ) {
-        if (!Array.isArray(data)) {
-            return "No data"
-        }
-
         let chn = this.page.querySelector("#currentChanel");
         chn.innerText = data[0].source.name;
 

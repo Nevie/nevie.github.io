@@ -1,5 +1,12 @@
+import {GetDataModel} from "../services/GetDataModel";
+import {appConfig} from "../../config";
+
 export class MainTemplate {
-    static drawTemplate(parentElement) {
+    constructor(element){
+        this.page = element;
+    }
+
+    drawTemplate() {
        let html = `
             <section id="newsApplication">
                 <div class="column left">
@@ -19,6 +26,6 @@ export class MainTemplate {
                 </div>
             </section>`;
 
-        parentElement.insertAdjacentHTML('beforeend', html);
+        this.page.insertAdjacentHTML('beforeend', html);
     }
 }
