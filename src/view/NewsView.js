@@ -24,6 +24,6 @@ export class NewsView {
              </li>`;
         });
 
-        this.page.querySelector("#newsBlock ul").insertAdjacentHTML('beforeend', html);
+        this.page.querySelector("#newsBlock ul").innerHTML = html;
     }
 }

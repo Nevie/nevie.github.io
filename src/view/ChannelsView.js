@@ -34,8 +34,6 @@ export class ChannelView {
     }
 
     onChanelSelect(event) {
-        event.stopPropagation();
-        this.page.querySelector("#newsBlock ul").innerHTML = '';
         this.component.getNewsByChanel(event.target.id);
     }
 }
