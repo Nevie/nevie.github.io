@@ -1,12 +1,9 @@
-import {GetDataModel} from "../services/GetDataModel";
-import {appConfig} from "../../config";
-
-export class MainTemplate {
+export class MainView {
     constructor(element){
         this.page = element;
     }
 
-    drawTemplate() {
+    draw() {
        let html = `
             <section id="newsApplication">
                 <div class="column left">
@@ -24,8 +21,9 @@ export class MainTemplate {
                         <ul class="list-group"></ul>
                     </div>
                 </div>
-            </section>`;
+            </section>
+            <div id="error"></div>`;
 
-        this.page.insertAdjacentHTML('beforeend', html);
+        this.page.innerHTML = html;
     }
 }

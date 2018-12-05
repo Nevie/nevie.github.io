@@ -1,13 +1,12 @@
 import {RequestsType} from "../models/RequestsTypes";
 
-export class PostRequest{
-    static async executeQuery(query,headers, data) {
-        let response = await fetch(query,
-            {
-                headers: headers,
-                method: RequestsType.POST,
-                body: JSON.stringify(data)
-            });
+export class PostRequest {
+    static async executeQuery(query, args = {}) {
+        const requestArgs = {
+            ...args,
+            method: RequestsType.POST
+        };
+        let response = await fetch(query, requestArgs);
         return response.ok ? response.json() : Promise.reject(response.status);
     }
 }

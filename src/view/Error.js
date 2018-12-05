@@ -1,7 +1,8 @@
 export class Error {
     static instance;
 
-    constructor() {
+    constructor(element) {
+        this.page = element;
         if (Error.instance) {
             return Error.instance;
         }
@@ -9,11 +10,11 @@ export class Error {
         return Error.instance;
     }
 
-    drawDataError(error) {
+    draw(error) {
         let html = `<div class="alert alert-danger" id="alertDanger">
                 <strong>Fail.</strong>
                 ${error}
             </div>`;
-        document.querySelector("#newsBlock ul").innerHTML = html;
+        this.page.querySelector("#newsBlock ul").innerHTML = html;
     }
 }
