@@ -1,9 +1,7 @@
 class MainComponent extends HTMLElement {
     constructor() {
         super();
-        this.addEventListener('click',
-            this.loadApp()
-        );
+        this.addEventListener('click', this.loadApp);
     }
 
     connectedCallback() {
@@ -16,11 +14,12 @@ class MainComponent extends HTMLElement {
 
     async loadApp() {
         this.removeEventListener('click',this.loadApp,false);
-        const Controller = await import(/* webpackChunkName: "NewsComponent" */ './controller/NewsController.js');
+        document.getElementById("showContent").style.display = 'none';
+
+        const {NewsController} = await import(/* webpackChunkName: "NewsComponent" */ './controller/NewsController.js');
         await import(/* webpackChunkName: "css" */ './styles/style.css');
 
-        document.getElementById("showContent").style.display='none';
-        let controllers = new Controller.NewsController(document.getElementById("content"));
+        let controllers = new NewsController(document.getElementById("content"));
         await controllers.init();
     }
 }

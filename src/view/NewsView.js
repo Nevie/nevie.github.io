@@ -1,5 +1,8 @@
-export class NewsView {
+import {BaseView} from "./BaseView";
+
+export class NewsView extends BaseView{
     constructor(element){
+        super();
         this.page = element;
     }
 

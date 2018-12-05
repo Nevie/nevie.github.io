@@ -10,14 +10,12 @@ export class NewsService {
     static availableChannels = [];
 
     async getChannels() {
-        debugger
         const path = `${appConfig.apiUrl}/sources?apiKey=${appConfig.apiKey}`;
         let data = await this.executeQuery(path);
         return this.createChannelsModel(data);
     }
 
     async getNews(chanel) {
-        debugger
         const path = `${appConfig.apiUrl}/top-headlines?sources=${chanel}&apiKey=${appConfig.apiKey}`;
         let data = await this.executeQuery(path);
 

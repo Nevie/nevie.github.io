@@ -1,5 +1,8 @@
-export class MainView {
+import {BaseView} from "./BaseView";
+
+export class MainView extends BaseView{
     constructor(element){
+        super();
         this.page = element;
     }
 

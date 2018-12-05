@@ -11,8 +11,8 @@ export class NewsController {
 
     constructor(element) {
         this.page = element;
-        // this.service = traceMethodCalls(HTTPRequestFactory.requestService(RequestsType.GET));
-        this.service =  traceMethodCalls(new NewsService(HTTPRequestFactory.requestService(RequestsType.GET)));
+
+        this.service = traceMethodCalls(new NewsService(HTTPRequestFactory.requestService(RequestsType.GET)));
 
         this.mainView = new MainView(this.page);
         this.channelView = new ChannelView(this.page);
@@ -25,14 +25,12 @@ export class NewsController {
         this.mainView.draw(this.page);
         try {
            const channels = await this.refreshChannels();
-            await this.refreshNews(channels[0].id);
+           if(channels.length){
+               await this.refreshNews(channels[0].id);
+           }
         } catch (e) {
             await this.showError(e)
         }
-    }
-
-    initChannels(channels) {
-        this.channelView.draw(channels);
     }
 
     addSubscriptions() {
@@ -61,6 +59,10 @@ export class NewsController {
         return channels;
     }
 
+    initChannels(channels) {
+        this.channelView.draw(channels);
+    }
+
     initNews(articles) {
         this.newsView.draw(articles);
     }
@@ -75,7 +77,7 @@ export class NewsController {
     }
 
     async showError(err) {
-        const {Error: Error} = await import(/* webpackChunkName: "Error" */ '../view/Error.js');
+        const {Error} = await import(/* webpackChunkName: "Error" */ '../view/Error.js');
         this.error = new Error(this.page);
         this.error.draw(err);
     }

@@ -1,7 +1,10 @@
-export class Error {
+import {BaseView} from "./BaseView";
+
+export class Error extends BaseView{
     static instance;
 
     constructor(element) {
+        super();
         this.page = element;
         if (Error.instance) {
             return Error.instance;
@@ -15,6 +18,6 @@ export class Error {
                 <strong>Fail.</strong>
                 ${error}
             </div>`;
-        this.page.querySelector("#newsBlock ul").innerHTML = html;
+        this.page.querySelector("#error").innerHTML = html;
     }
 }

@@ -5,18 +5,18 @@ import {PutRequest} from "./PutRequest";
 
 export class HTTPRequestFactory {
     static requestService(requestsType) {
-        let service;
+        let requestQuery;
         switch (requestsType) {
             case RequestsType.GET:
-                service = GetRequest.executeQuery;
+                requestQuery = GetRequest.executeQuery;
                 break;
             case RequestsType.POST:
-                service = PostRequest.executeQuery;
+                requestQuery = PostRequest.executeQuery;
                 break;
             case RequestsType.PUT:
-                service = PutRequest.executeQuery;
+                requestQuery = PutRequest.executeQuery;
                 break;
         }
-        return service;//new Proxy(obj, handler);
+        return requestQuery;
     }
 }

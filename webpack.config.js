@@ -9,8 +9,6 @@ const config = {
         chunkFilename: '[name].bundle.js',
         filename: '[name].bundle.js',
         path: path.resolve(__dirname, './dist'),
-        publicPath: './',
-
     },
     devServer: {
         contentBase: path.join(__dirname, './dist'),
@@ -54,7 +52,7 @@ const config = {
                 collapseWhitespace:true
             },
             hash: true,
-            template: './src/index.html', // Load a custom template (ejs by default see the FAQ for details)
+            template: './src/index.html'
         }),
         new ExtractTextWebpackPlugin('style.css')
 
